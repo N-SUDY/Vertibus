@@ -1,9 +1,40 @@
-# Wa-OpenAI
+<div align="center">
+  
+  <img width="192" title="Vertibus" src="https://github.com/Keito-Klein.png"/>
+
+</div>
+
+<div align="center">
+
+  <img title="Vertibus" src="https://img.shields.io/badge/Vertibus-yellow?colorA=%23ff0000&colorB=%23017e40&style=for-the-badge">
+
+</div>
+
+---
+
+
+<div align="center">  
+  <a href="https://github.com/Keito-Klein">
+    <img title="Keito-Klein" src="https://img.shields.io/badge/AUTHOR-MiKako-orange.svg?style=for-the-badge&logo=github"></a>
+</div>
+
 
 ***WhatsApp OpenAI Create with NodeJS Using Library [Baileys](https://github.com/adiwajshing/Baileys)***
 
-## BACA DULU
-Terdapat 2 fitur yaitu ```ChatGPT(text)``` dan ```DALL-E(Text To Image).```<br>Untuk commandnya menggunakan ```/ai``` dan ```/img```
+<p align="center">
+
+**This Bot Support on :**
+</p>
+
+<p align="center">
+  <img title="Whatsapp-Bot-Termux" src="https://img.shields.io/badge/Termux-302c2c?style=for-the-badge&logo=iterm2&logoColor=000000"></img>
+  <img title="Whatsapp-Bot-Replit" src="https://img.shields.io/badge/replit-3b1903?style=for-the-badge&logo=replit&logoColor=F26207"></img>
+  <img title="Whatsapp-Bot-Railway" src="https://img.shields.io/badge/railway-362b2b?style=for-the-badge&logo=railway&logoColor=0B0D0E"></img>
+</p>
+
+## Getting STarted
+This project require :
+- [NodeJS](https://nodejs.org/en/download/) [v16 or greater](https://nodejs.org/dist/)
 
 ## Get & Change OpenAI ApiKey
 - Silakan buat apikeynya terlebih dahulu [Disini](https://beta.openai.com/account/api-keys)

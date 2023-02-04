@@ -204,7 +204,7 @@ module.exports = sansekai = async (client, m, chatUpdate, store) => {
       switch (command) {
         case "help":
         case "menu":
-          m.reply(`*Whatsapp Bot OpenAI*
+          m.reply(`*Vertibus Toram DB*
             
 *(ChatGPT)*
 Cmd: ${prefix}ai 
@@ -286,7 +286,9 @@ Membuat sticker dengan teks
         let lvl = q.split('|')[0]
         let bexp = q.split('|')[1]
          if (!lvl) return m.reply(`cara penggunaan ${prefix + command} level|bonus exp`)
-           if (!bexp) return m.reply(`cara penggunaan ${prefix + command} level|binus exp`)
+           if (!bexp) return m.reply(`cara penggunaan ${prefix + command} level|bonus exp`)
+          if( isNaN(lvl)) return m.reply(`cara penggunaan ${prefix + command} level|bonus exp`)
+            if( isNaN(bexp)) return m.reply(`cara penggunaan ${prefix + command} level|bonus exp`)
         
 
     axios.get(`https://toram-id.info/leveling?level=${lvl}&bonusexp=${bexp}&range=5`)
@@ -405,6 +407,7 @@ case 'fauna':
               break;
 
 case 'smeme': case 'stickmeme':
+  if (!text) return m.reply(`cara penggunaan ${prefix + command} teks atas|teks bawah`)
 top = q.split('|')[0]
 bottom = q.split('|')[1]
 var imgbb = require('imgbb-uploader')

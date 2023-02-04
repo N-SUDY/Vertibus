@@ -1,7 +1,7 @@
 {
-  "name": "Wa-OpenAI",
+  "name": "Vertibus",
   "version": "1.2.4",
-  "description": "WhatsApp Bot OpenAI Using Lib Baileys Multi Device",
+  "description": "WhatsApp Bot with Toram Online DB",
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
@@ -18,8 +18,8 @@
     "bot-md",
     "whatsapp-multi-device"
   ],
-  "base": "https://github.com/DikaArdnt/Hisoka-Morou",
-  "author": "Yusril",
+  "base": "https://github.com/Sansekai/Wa-OpenAI",
+  "author": "MiKako",
   "license": "MIT",
   "dependencies": {
     "@adiwajshing/baileys": "4.4.0",
@@ -47,10 +47,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Sansekai/Wa-OpenAI.git"
+    "url": "git+https://github.com/Keito-Klein/t-bot.git"
   },
   "bugs": {
-    "url": "https://github.com/Sansekai/Wa-OpenAI/issues"
+    "url": "https://github.com/Keito-Klein/t-bot/issues"
   },
-  "homepage": "https://github.com/Sansekai/Wa-OpenAI#readme"
+  "homepage": "https://github.com/Keito-Klein/t-bot#readme"
 }

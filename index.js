@@ -1,4 +1,4 @@
-const sessionName = "MiKako";
+const sessionName = "client";
 const donet = "https://saweria.co/sansekai";
 const owner = ["6283831853737"];
 const {
