@@ -32,7 +32,7 @@
   <img title="Whatsapp-Bot-Railway" src="https://img.shields.io/badge/railway-362b2b?style=for-the-badge&logo=railway&logoColor=0B0D0E"></img>
 </p>
 
-## Getting STarted
+## Getting Started
 This project require :
 - [NodeJS](https://nodejs.org/en/download/) [v16 or greater](https://nodejs.org/dist/)
 
