@@ -38,7 +38,11 @@ This project require :
 
 ## Get & Change OpenAI ApiKey
 - Silakan buat apikeynya terlebih dahulu [Disini](https://beta.openai.com/account/api-keys)
-- Ganti ApiKey OpenAI pada file [key.json](https://github.com/Sansekai/Wa-OpenAI/blob/3bd55740764bcb30084277f6be82d15b6ee25b99/key.json#L2)
+- Ganti ApiKey OpenAI pada file [key.json](https://github.com/Keito-Klein/Vertibus/blob/6f6142fe6f37065663d9051ffda096826697e83e/key.json#L2)
+
+## Change Session Name & Owner Number
+- Ganti nama file session [Disini](https://github.com/Keito-Klein/Vertibus/blob/6f6142fe6f37065663d9051ffda096826697e83e/index.js#L1)
+- Ganti nomer owner [Disini](https://github.com/Keito-Klein/Vertibus/blob/6f6142fe6f37065663d9051ffda096826697e83e/index.js#L3)
 
 ## Install
 **Install on RDP/Windows ✅**
@@ -46,8 +50,8 @@ This project require :
 Install [NodeJS](https://nodejs.org/en/download/)
  dan [Git Bash](https://git-scm.com/downloads) terlebih dahulu
 ```bash
-$ git clone https://github.com/Sansekai/Wa-OpenAI
-$ cd Wa-OpenAI
+$ git clone https://github.com/Keito-Klein/Vetibus
+$ cd Vertibus
 $ npm install
 $ node index.js
 ```
@@ -57,10 +61,10 @@ Silakan install manual ```node_modules``` terlebih dahulu, karena di termux saat
 <br>Link ```node_modules```: [Klik Disini](https://drive.google.com/file/d/1gKGjseRirX6mQ5LOFULpmnDs7q3Svm8y/view?usp=sharing)
 ```bash
 $ pkg install git nodejs -y
-$ git clone https://github.com/Sansekai/Wa-OpenAI
-$ cd Wa-OpenAI
+$ git clone https://github.com/Keito-Klein/Vetibus
+$ cd Vertibus
 ```
-Sesudah menginstall file node_modules, silahkan extract file ```node_modules.zip``` dan taruh di folder Wa-OpenAI.
+Sesudah menginstall file node_modules, silahkan extract file ```node_modules.zip``` dan taruh di folder Vertibus.
 
 **Run**
 ```bash
