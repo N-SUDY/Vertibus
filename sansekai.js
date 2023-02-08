@@ -90,12 +90,12 @@ module.exports = sansekai = async (client, m, chatUpdate, store) => {
           exp: 'idk',
           map: 'Istana Gelap: A2'
         }, {
-          monster:'Malaikat Gelembung(Biru)',
-          lv: '143',
-          element: 'Air',
-          hp: 'idk',
-          exp: 'idk',
-          map: 'Kuil Dewa Berkah: A2'
+          monster:'*Malaikat Gelembung(Biru)*',
+          lv: '*143*',
+          element: '*Air*',
+          hp: '*idk*',
+          exp: '*idk*',
+          map: '*Kuil Dewa Berkah: A2*'
         }, {
           monster: 'Bitum',
           lv: '210',
@@ -128,12 +128,12 @@ module.exports = sansekai = async (client, m, chatUpdate, store) => {
           exp: '94',
           map: 'Distrik Altolae'
         }, {
-          monster: 'Ivy',
-          lv: '150',
-          element: 'Bumi',
-          hp: 'idk',
-          exp: '195',
-          map: 'Kuil Naga Kegelapan: A2'
+          monster: '*Ivy*',
+          lv: '*150*',
+          element: '*Bumi*',
+          hp: '*idk*',
+          exp: '*195*',
+          map: '*Kuil Naga Kegelapan: A2*'
         }],
 
         beast: [{
@@ -151,28 +151,42 @@ module.exports = sansekai = async (client, m, chatUpdate, store) => {
           exp: 'idk',
           map: 'Kota Hilang: Alun-Alun'
         }, {
-          monster: 'Venomsch',
-          lv: '112',
-          element: 'Air',
-          hp: '7000',
-          exp: 'idk',
-          map: 'Saluran Bawah Tanah Ultimea: Selatan'
+          monster: '*Venomsch*',
+          lv: '*112*',
+          element: '*Air*',
+          hp: '*7000*',
+          exp: '*dk*',
+          map: '*Saluran Bawah Tanah Ultimea: Selatan*'
         }, {
-          monster: 'Underground Nemico',
-          lv: '109',
-          element: 'Angin',
-          hp: 'idk',
-          exp: 'idk',
-          map: 'Saluran Bawah Tanah Ultimea: Tenggara'
+          monster: '*Underground Nemico*',
+          lv: '*109*',
+          element: '*Angin*',
+          hp: '*idk*',
+          exp: '*idk*',
+          map: '*Saluran Bawah Tanah Ultimea: Tenggara*'
         }],
 
         medic: [{
-          monster: 'Jelly Ungu',
-          lv: '110',
+          monster: '*Jelly Ungu*',
+          lv: '*110*',
+          element: '*Gelap*',
+          hp: '*7000*',
+          exp: '*128*',
+          map: '*Saluran Bawah Tanah Ultimea: Tenggara*'
+        }, {
+          monster: 'Acernix',
+          lv: '138',
+          element: 'Air',
+          hp: '4000',
+          exp: '197',
+          map: 'Taman Es & Salju'
+        }, {
+          monster: 'Lyark Spesialis',
+          lv: '119',
           element: 'Gelap',
-          hp: '7000',
-          exp: '128',
-          map: 'Saluran Bawah Tanah Ultimea: Tenggara'
+          hp: '15000',
+          exp: '286',
+          map: 'Laboratorium Brahe: Gedung 2'
         }]
     },
   }
@@ -317,7 +331,7 @@ Membuat sticker dengan teks
 
   case 'farm':
   case 'farming':
-  if (!text) return reply("Mau farming apa?\n\n/logam\n/kayu\n/fauna\n/obat *(Dalam Pengembangan)*\n/kain _(Comming Soon)_\n/lainnya _(Comming Soon)_")
+  if (!text) return reply("Mau farming apa?\n\n/logam\n/kayu\n/fauna\n/obat\n/kain _(Comming Soon)_\n/lainnya _(Comming Soon)_")
     if(text == "logam") {
       db = `*Berikut ini list Spot Farming ${text} yang saya ketahui:*\n`
       for(let i = 0; i < mobs.mats.metal.length; i++) {
