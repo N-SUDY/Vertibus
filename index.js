@@ -438,3 +438,6 @@ fs.watchFile(file, () => {
   delete require.cache[file];
   require(file);
 });
+
+/*Uptime Replit 24 Hours*/
+require("http").createServer((_, res) => res.end("Uptime!")).listen(8080)

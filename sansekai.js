@@ -3,7 +3,9 @@ const fs = require("fs");
 const util = require("util");
 const chalk = require("chalk");
 const { Configuration, OpenAIApi } = require("openai");
-const cheerio = require("cheerio")
+const cheerio = require("cheerio");
+const { event } = require("./lib/event.js")
+const { mt } = require("./lib/mt.js")
 let setting = require("./key.json");
 var packName = "Masbro"
 var author = "MiKako"
@@ -236,9 +238,12 @@ Cmd: ${prefix}farming
 List recommend farming
 *(Dalam Pengembangan)*
 
-Cmd: ${prefix}farming 
-Saran farming dari Bot
+Cmd: ${prefix}event 
+list event
 *(Dalam Pengembangan)*
+
+Cmd: ${prefix}maintenance
+menampilkan maintenance terbaru
 
 *(OTHER)*
 Cmd: ${prefix}sticker
@@ -395,6 +400,34 @@ case 'fauna':
       }
       client.sendText(from, db, mek)
   break;
+
+  case 'event': 
+    if(!text) return reply("Event apa yang anda cari?\n- valentine")
+      if(text == "valentine") {
+        valen = event(text)
+        db = `Berikut ini adalah list quest ${text} yang saya ketahui:\n\n`
+        for (let i = 0; i < valen.quest.length; i++) {
+          db += `\n------------------\n*${valen.quest[i].name}*\nSyarat: ${valen.quest[i].req}\nNPC: ${valen.quest[i].npc}\nQuest Level: ${valen.quest[i].lv}\nBahan Quest: \n${valen.quest[i].mats}\nBoss: ${valen.quest[i].boss}\nUnsur Boss: ${valen.quest[i].element}\nEXP: \n${valen.quest[i].exp}\nReward: ${valen.quest[i].reward}`
+        }
+      }
+      client.sendText(from, db,mek)
+      break;
+
+    case 'valentine':
+      valen = event(text)
+        db = `Berikut ini adalah list quest ${text} yang saya ketahui:\n\n`
+        for (let i = 0; i < valen.quest.length; i++) {
+          db += `\n------------------\n*${valen.quest[i].name}*\nSyarat: ${valen.quest[i].req}\nNPC: ${valen.quest[i].npc}\nQuest Level: ${valen.quest[i].lv}\nBahan Quest: \n${valen.quest[i].mats}\nBoss: ${valen.quest[i].boss}\nUnsur Boss: ${valen.quest[i].element}\nEXP: \n${valen.quest[i].exp}\nReward: ${valen.quest[i].reward}`
+        }
+        break
+
+    case 'maintenance':
+    case 'mt':
+      reply('mohon tunggu sebentar...')
+      maint = await mt()
+      client.sendText(from, maint, mek)
+    break
+
 
   case 'sticker': case 's': case 'stickergif': case 'sgif': 
      if(q.split('|')[0]) {
