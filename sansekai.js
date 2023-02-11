@@ -9,6 +9,82 @@ const { mt } = require("./lib/mt.js")
 let setting = require("./key.json");
 var packName = "Masbro"
 var author = "MiKako"
+const guild = JSON.parse(fs.readFileSync('./db/guild.json'))
+
+//Buff Function
+//OK
+const addBuff = (name, buff) => {
+        const ovj = {id: name, buff: buff}
+        guild.push(ovj)
+        fs.writeFileSync('./db/guild.json', JSON.stringify(guild))
+        }
+
+//OK
+const getBuff = (name) => {
+    let position = false
+    Object.keys(guild).forEach((i) => {
+    if (guild[i].id === name) {
+    position = i
+    }
+})
+    if(position === false) {
+      return 'ign tersebut tidak ada!!'
+    } else {
+return guild[position].buff
+    } 
+}
+
+/*const multipleBuff = (buff) => {
+  arr = []
+  Object.keys(guild).forEach((i) => {
+    if(guild[i].buff.includes(buff)) {
+      arr.push(guild[i].id)
+    } else {
+      arr.push(false)
+    }
+  })
+  return arr
+}*/
+
+//OK
+const checkName = (name) => {
+  let position = false
+  Object.keys(guild).forEach((i) => {
+                if (guild[i].id === name) {
+                    position = true
+                }
+            })
+            return position
+        }
+
+//OK
+const changeBuff = (name, lvl) => {
+  let position = false;
+  Object.keys(guild).forEach((i) => {
+    if(guild[i].id == name) {
+      position = i
+    }
+  })
+  if(position !== false) {
+    guild[position].buff = lvl
+    fs.writeFileSync('./db/guild.json', JSON.stringify(guild))
+  }
+}
+
+//OK
+const delBuff = (name) => {
+  let position = false
+  Object.keys(guild).forEach((i) => {
+    if (guild[i].id == name) {
+      position = i
+    }
+  })
+  if (position !== false) {
+    guild.splice(position, 1)
+    fs.writeFileSync('./db/guild.json', JSON.stringify(guild))
+  }
+}
+
 
 module.exports = sansekai = async (client, m, chatUpdate, store) => {
   try {
@@ -56,10 +132,34 @@ module.exports = sansekai = async (client, m, chatUpdate, store) => {
     const color = (text, color) => {
       return !color ? chalk.green(text) : chalk.keyword(color)(text);
     };
+      //Ku Nonaktifin
+    /*let infoMSG = JSON.parse(fs.readFileSync('./db/msg.data.json'))
+  infoMSG.push(JSON.parse(JSON.stringify(mek)))
+  fs.writeFileSync('./db/msg.data.json', JSON.stringify(infoMSG, null, 2))
+  const urutan_pesan = infoMSG.length
+  if (urutan_pesan === 5000) {
+      infoMSG.splice(0, 4300)
+      fs.writeFileSync('./db/msg.data.json', JSON.stringify(infoMSG, null, 2))
+  }*/
+
+  const getGroupAdmins = (participants) => {
+  admins = []
+  for (let i of participants) {
+    i.admin ? admins.push(i.id) : ''
+  }
+  return admins
+}
 
     // Group
+    const myGuild = ['6289675651966-1611471388@g.us', '120363023056066862@g.us']
     const groupMetadata = m.isGroup ? await client.groupMetadata(m.chat).catch((e) => {}) : "";
     const groupName = m.isGroup ? groupMetadata.subject : "";
+    const groupId = m.isGroup ? groupMetadata.id : ''
+    const groupMembers = m.isGroup ? groupMetadata.participants : ''
+    const groupAdmins = m.isGroup ? getGroupAdmins(groupMembers) : ''
+    const isGroupAdmins = groupAdmins.includes(sender) || false
+    const isMyGuild = myGuild.includes(groupId) || false
+
 
     /*Media Init*/
     const isMedia = (m.mtype === 'imageMessage' || m.mtype === 'videoMessage')
@@ -176,19 +276,48 @@ module.exports = sansekai = async (client, m, chatUpdate, store) => {
           exp: '*128*',
           map: '*Saluran Bawah Tanah Ultimea: Tenggara*'
         }, {
-          monster: 'Acernix',
-          lv: '138',
-          element: 'Air',
-          hp: '4000',
-          exp: '197',
-          map: 'Taman Es & Salju'
-        }, {
           monster: 'Lyark Spesialis',
           lv: '119',
           element: 'Gelap',
           hp: '15000',
           exp: '286',
           map: 'Laboratorium Brahe: Gedung 2'
+        }, {
+          monster: 'Acernix',
+          lv: '138',
+          element: 'Air',
+          hp: '4000',
+          exp: '197',
+          map: 'Taman Es & Salju'
+        }],
+        cloth: [{
+          monster: 'Rutiro',
+          lv: '36',
+          element: 'Gelap',
+          hp: '1300',
+          exp: '48',
+          map: 'Menara Kuno Aulada'
+        }, {
+          monster: 'Cassy',
+          lv: '48',
+          element: 'Gelap',
+          hp: 'idk',
+          exp: '72',
+          map: 'Makam Ratu Kuno: Area 2'
+        }, {
+          monster: 'Underground Nemico',
+          lv: '109',
+          element: 'Angin',
+          hp: '6500',
+          exp: '103',
+          map: 'Saluran Bawah Tanah Ultimea: Tenggara'
+        }, {
+          monster: 'Potum Semadi',
+          lv: '132',
+          element: 'cahaya',
+          hp: '8465',
+          exp: '153',
+          map: 'Koridor Haresi'
         }]
     },
   }
@@ -236,7 +365,6 @@ List Leveling character
 
 Cmd: ${prefix}farming
 List recommend farming
-*(Dalam Pengembangan)*
 
 Cmd: ${prefix}event 
 list event
@@ -245,12 +373,27 @@ list event
 Cmd: ${prefix}maintenance
 menampilkan maintenance terbaru
 
+*(Guild DB)*
+Cmd: ${prefix}buff
+Menampilkan seluruh Buff serikat
+
+Cmd: ${prefix}push
+Menambahkan buff kedalam list buff serikat
+
+Cmd: ${prefix}change
+Mengganti salah satu buff di list buff serikat
+
+Cmd: ${prefix}delete
+Menghapus salah satu buff di list buff serikat
+
 *(OTHER)*
 Cmd: ${prefix}sticker
 Membuat sticker dari gambar yg dikirim
+*Error*
 
 Cmd: ${prefix}smeme
 Membuat sticker dengan teks
+*Error*
 `)
           break;
         case "ai": case "openai": 
@@ -361,6 +504,12 @@ Membuat sticker dengan teks
          db += `\n------------------\nMonster: ${mobs.mats.medic[i].monster}\nLevel: ${mobs.mats.medic[i].lv}\nElement: ${mobs.mats.medic[i].element}\nHP: ${mobs.mats.medic[i].hp}\nEXP: ${mobs.mats.medic[i].exp}\nLokasi: ${mobs.mats.medic[i].map}`
       }
       client.sendText(from, db, mek)
+    } else if(text == 'kain') {
+      db = `*Berikut ini list Spot Farming ${text} yang saya ketahui:*\n`
+      for(let i = 0; i < mobs.mats.cloth.length; i++) {
+         db += `\n------------------\nMonster: ${mobs.mats.cloth[i].monster}\nLevel: ${mobs.mats.cloth[i].lv}\nElement: ${mobs.mats.cloth[i].element}\nHP: ${mobs.mats.cloth[i].hp}\nEXP: ${mobs.mats.cloth[i].exp}\nLokasi: ${mobs.mats.cloth[i].map}`
+      }
+      client.sendText(from, db, mek)
     }
     break;
 
@@ -401,6 +550,15 @@ case 'fauna':
       client.sendText(from, db, mek)
   break;
 
+case 'kain':
+  case 'cloth':
+    db = `*Berikut ini list Spot Farming ${text} yang saya ketahui:*\n`
+      for(let i = 0; i < mobs.mats.cloth.length; i++) {
+         db += `\n------------------\nMonster: ${mobs.mats.cloth[i].monster}\nLevel: ${mobs.mats.cloth[i].lv}\nElement: ${mobs.mats.cloth[i].element}\nHP: ${mobs.mats.cloth[i].hp}\nEXP: ${mobs.mats.cloth[i].exp}\nLokasi: ${mobs.mats.cloth[i].map}`
+      }
+      client.sendText(from, db, mek)
+  break;
+
   case 'event': 
     if(!text) return reply("Event apa yang anda cari?\n- valentine")
       if(text == "valentine") {
@@ -426,6 +584,70 @@ case 'fauna':
       reply('mohon tunggu sebentar...')
       maint = await mt()
       client.sendText(from, maint, mek)
+    break
+
+  case "push":
+    if(!m.isGroup) return reply("hanya bisa di lakukan di group!")
+    if(!isMyGuild) return reply("Tidak bisa di gunakan di grup ini!")
+    if(!isGroupAdmins) return reply("Minta admin untuk menambahkan!")
+    if(!text) return reply(`Cara penggunan ${prefix}${command} ign|buffland`)
+    if(!text.includes('|')) return reply('Format salah!!')
+      ign = q.split('|')[0]
+      buff = q.split('|')[1]
+      validation = checkName(ign)
+      if(validation === true) {
+        return reply(`${ign} sudah ada dalam list buff serikat!!`)
+      } else {  
+      await addBuff(ign, buff)
+      client.sendText(from, 'Buff telah ditambahkan ke dalam list buff serikat!!', mek)
+      }
+    break
+
+  case 'change':
+    if(!m.isGroup) return reply("hanya bisa di lakukan di group!")
+    if(!isMyGuild) return reply("Tidak bisa di gunakan di grup ini!")
+    if(!isGroupAdmins) return reply("Minta admin untuk mengganti!")
+    if(!text) return reply(`Cara penggunan ${prefix}${command} ign|buffland`)
+    if(!text.includes('|')) return reply('Format salah!!')
+      ign = q.split('|')[0]
+      buff = q.split('|')[1]
+      validation = checkName(ign)
+      if(validation === true) {
+      await changeBuff(ign, buff)
+      client.sendText(from, 'Buff telah diganti!!', mek)
+      } else {
+        reply(`${ign} tidak ada dalam list buff serikat!!`)
+      }
+    break 
+
+  case 'delete':
+    if(!m.isGroup) return reply("hanya bisa di lakukan di group!")
+    if(!isMyGuild) return reply("Tidak bisa di gunakan di grup ini!")
+    if(!isGroupAdmins) return reply("Minta admin untuk menghapus!")
+    if(!text) return reply(`Cara penggunan ${prefix}${command} ign`)
+    validation = checkName(text)
+  if (validation === true) {
+    await delBuff(text)
+    client.sendText(from, 'Buff sukses dihapus!!', mek)
+  } else {
+    reply(`${text} memang tidak adaa dalam list buff serikat!!`)
+  }
+  break
+
+case "buff":
+  if(!m.isGroup) return reply("hanya bisa di lakukan di group!")
+  if(!isMyGuild) return reply("Tidak bisa di gunakan di grup ini!")
+  db = `*List Buff Member ⚔️👑SHINRA_TENSEI👑⚔️*\n\n`
+  for (let i = 0; i < guild.length; i++) {
+  db += `${i + 1}. ${guild[i].id} / ${guild[i].buff}\n`
+  }
+  db += `\nJika ada perubahan/mau ditambahkan, tag admin/pengurus guild🙏👍`
+  client.sendText(from, db, mek)
+  break
+
+  case 'meta':
+    se = client.groupMetadata()
+    console.log(groupMetadata)
     break
 
 

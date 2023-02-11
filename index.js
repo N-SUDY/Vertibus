@@ -272,7 +272,7 @@ async function startHisoka() {
         console.log("Connection Replaced, Another New Session Opened, Please Close Current Session First");
         process.exit();
       } else if (reason === DisconnectReason.loggedOut) {
-        console.log(`Device Logged Out, Please Delete Session file yusril.json and Scan Again.`);
+        console.log(`Device Logged Out, Please Delete Session file client.json and Scan Again.`);
         process.exit();
       } else if (reason === DisconnectReason.restartRequired) {
         console.log("Restart Required, Restarting...");
