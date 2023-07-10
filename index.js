@@ -1,6 +1,5 @@
-const sessionName = "client";
-const donet = "https://saweria.co/sansekai";
-const owner = ["6283831853737"];
+require('./setting')
+sessionName = "client";
 const {
   default: sansekaiConnect,
   useSingleFileAuthState,
@@ -15,18 +14,21 @@ const {
   jidDecode,
   proto,
   getContentType,
+  useMultiFileAuthState,
 } = require("@adiwajshing/baileys");
-const { state, saveState } = useSingleFileAuthState(`./${sessionName}.json`);
+
 const pino = require("pino");
 const { Boom } = require("@hapi/boom");
 const fs = require("fs");
 const axios = require("axios");
 const chalk = require("chalk");
 const figlet = require("figlet");
+const moment = require("moment-timezone")
 const _ = require("lodash");
 const fileType = require("file-type");
 const PhoneNumber = require("awesome-phonenumber");
-const { imageToWebp, videoToWebp, writeExifImg, writeExifVid } = require('./lib/exif');
+const { imageToWebp, videoToWebp, writeExifImg, writeExifVid, toImage, stickerToGif } = require('./lib/exif');
+const { ind } =require("./language")
 
 const store = makeInMemoryStore({ logger: pino().child({ level: "silent", stream: "store" }) });
 
@@ -92,7 +94,7 @@ function smsg(conn, m, store) {
         message: quoted,
         ...(m.isGroup ? { participant: m.quoted.sender } : {}),
       }));
-
+      
       /**
        *
        * @returns
@@ -142,6 +144,7 @@ function smsg(conn, m, store) {
 }
 
 async function startHisoka() {
+  const { state, saveCreds } = await useMultiFileAuthState(`./${global.sessionName ? global.sessionName : "session"}`);
   const { version, isLatest } = await fetchLatestBaileysVersion();
   console.log(`using WA v${version.join(".")}, isLatest: ${isLatest}`);
   console.log(
@@ -256,6 +259,7 @@ async function startHisoka() {
 
   client.serializeM = (m) => smsg(client, m, store);
   client.ev.on("connection.update", async (update) => {
+
     const { connection, lastDisconnect } = update;
     if (connection === "close") {
       let reason = new Boom(lastDisconnect?.error)?.output.statusCode;
@@ -267,7 +271,7 @@ async function startHisoka() {
         startHisoka();
       } else if (reason === DisconnectReason.connectionLost) {
         console.log("Connection Lost from Server, reconnecting...");
-        startHisoka();
+        setTimeout(startHisoka(), 10000)
       } else if (reason === DisconnectReason.connectionReplaced) {
         console.log("Connection Replaced, Another New Session Opened, Please Close Current Session First");
         process.exit();
@@ -287,12 +291,65 @@ async function startHisoka() {
     } else if (connection === "open") {
       console.log(color("Bot success conneted to server", "green"));
       console.log(color("Type /menu to see menu"));
-      client.sendMessage(owner + "@s.whatsapp.net", { text: `Bot started!\n\njangan lupa support ya bang :)\n${donet}` });
+      client.sendMessage(global.owner + "@s.whatsapp.net", { text: `Bot started!\n\njangan lupa support ya bang :)\n${global.donet}` });
     }
     // console.log('Connected...', update)
   });
 
-  client.ev.on("creds.update", saveState);
+  client.ev.on("creds.update", saveCreds);
+  
+ 
+  //Group Update
+client.ev.on('group-participants.update', async (anu) => {
+console.log(anu)
+try {
+let metadata = await client.groupMetadata(anu.id)
+let participants = anu.participants
+date = moment().tz("Asia/Jakarta").format("DD/MM/YYYY")
+hours = moment().tz("Asia/Jakarta").format("HH:mm")
+
+for (let num of participants) {
+
+//Message Saat Ada User Yang Masuk Ke Grup
+if (anu.action == 'add') {
+tekswell = `Welcome @${num.split('@')[0]} 👋
+
+📛 User : @${num.split('@')[0]}
+☎️ Nomer : ${num.split('@')[0]}
+🎎 Group : ${metadata.subject}
+👫 Member : ${metadata.participants.length} Members
+
+📣 Perkenalkan diri anda ✌
+Nama: 
+IGN: 
+Gender: 
+Umur: 
+Buff: 
+Tanggal: ${date} ${hours}
+`
+client.sendMessage(anu.id, {text: tekswell, mentions: anu.participants})
+//Message Saat Ada User Yang Keluar Dari Grup
+} else if (anu.action == 'remove') {
+teksbye = `Sayonaraa @${num.split("@")[0]} 👋
+
+📛 User : @${num.split('@')[0]}
+☎️ Nomer : ${num.split('@')[0]}
+🎎 Group : ${metadata.subject}
+👫 Member : ${metadata.participants.length} Members
+
+📣 Selamat tinggal Semoga harimu menyenangkan
+${date} ${hours}
+`
+client.sendMessage(anu.id, {text: teksbye, mentions: anu.participants})
+//Message Saat Ada Yang Naik Jabatan
+}
+}
+
+} catch (err) {
+console.log(err)
+}
+})
+
 
   const getBuffer = async (url, options) => {
     try {
@@ -312,6 +369,77 @@ async function startHisoka() {
       return err;
     }
   };
+
+  //REMINDER
+  const hidetag = async (target, text) => {
+    group = await client.groupMetadata(target)
+    members = group.participants
+    mem = []
+    await members.map( async adm => {
+          mem.push(adm.id.replace('c.us', 's.whatsapp.net'))
+          })
+    /*options = {
+          text: text,
+          contextInfo: { mentionedJid: mem }
+          }*/
+      client.sendMessage(target, {text: text, mentions: mem})
+  }
+
+  setInterval( function() {
+    now = moment().tz("Asia/Jakarta").format("HH:mm")
+    day = moment().tz('Asia/Jakarta').format('dddd')
+    
+    if (global.reminder == true && now == "06:15") {
+      client.sendMessage(global.owner + "@s.whatsapp.net", { text: `Time to Cooking buff on Toram Online\n\n${now}` });
+      hidetag('120363023056066862@g.us', `*Jangan Lupa untuk memasak buff*\nReminder ini muncul setiap 12 jam\n\n- ${global.botName} -\n${now}`)
+    }
+    if (global.reminder == true && now == "18:15") {
+      client.sendMessage(global.owner + "@s.whatsapp.net", { text: `Time to Cooking buff on Toram Online\n\n${now}` })
+      hidetag('120363023056066862@g.us', `*Jangan Lupa untuk memasak buff*\nReminder ini muncul setiap 12 jam\n\n- ${global.botName} -\n${now}`)
+    }
+
+    /*RAID GUILD*/
+    if (global.raid == true && day == "Saturday" && now == "15:00") {
+      hidetag('120363023056066862@g.us', ind.raid());
+    }
+    if (global.raid == true && day == "Saturday" && now == "18:00") {
+      hidetag('120363023056066862@g.us', ind.raid());
+    }
+    if (global.raid == false && day == "Saturday" && now == "23.00") {
+      global.raid = true
+      client.sendMessage("6289675651966-1611471388@g.us", { text: "Raid telah di set ON otomatis" })
+    }
+    
+  }, 30000)
+
+  client.toImage = async (jid, path, quoted = "") => {
+    let buff = Buffer.isBuffer(path)
+      ? path
+      : /^data:.*?\/.*?;base64,/i.test(path)
+      ? Buffer.from(path.split`,`[1], "base64")
+      : /^https?:\/\//.test(path)
+      ? await await getBuffer(path)
+      : fs.existsSync(path)
+      ? fs.readFileSync(path)
+      : Buffer.alloc(0);
+      buffer = await toImage(buff)
+      return await client.sendMessage(jid, { image: buffer }, { quoted });
+  }
+
+  client.stickerToGif = async (jid, path, quoted = "") => {
+    let buff = Buffer.isBuffer(path)
+      ? path
+      : /^data:.*?\/.*?;base64,/i.test(path)
+      ? Buffer.from(path.split`,`[1], "base64")
+      : /^https?:\/\//.test(path)
+      ? await await getBuffer(path)
+      : fs.existsSync(path)
+      ? fs.readFileSync(path)
+      : Buffer.alloc(0);
+      buffer = await stickerToGif(buff)
+      return await client.sendMessage(jid, { video: buffer, gifPlayback: true}, { quoted });
+  }
+
 
   client.sendImage = async (jid, path, caption = "", quoted = "", options) => {
     let buffer = Buffer.isBuffer(path)
@@ -371,7 +499,7 @@ async function startHisoka() {
         
   return buffer
      }
-
+ 
 
     /**
 * 
@@ -440,4 +568,4 @@ fs.watchFile(file, () => {
 });
 
 /*Uptime Replit 24 Hours*/
-require("http").createServer((_, res) => res.end("Uptime!")).listen(8080)
+require("http").createServer((_, res) => res.end("Uptime!")).listen(5000)
