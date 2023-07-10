@@ -451,9 +451,26 @@ module.exports = sansekai = async (client, m, chatUpdate, store) => {
         case 'watk':
           if(!q) return reply(lang.format(prefix, command))
           int = parseInt(q)
-          proc = await eval(int*110/100+10)
-          client.sendMessage(from, proc, mek)
+          proc = eval(int*110/100+10)
+          str = proc.toString()
+          m.reply(str)
           break
+
+        /*case 'cdmg':
+          if(!q)return reply(lang.format(prefix, command))
+          if(!q.includes("/")) return reply("use \"/\" as separator!\nex: total STR/total STR on eq/total cd percent/cd flat/LV of skill critical UP\nDon't use space!\n\nExplanation:\n")
+            str = q.spli("/")[0]
+            strP = q.split("/")[1]
+            eq = q.split("/")[2]
+            xtall = q.split("/")[3]
+            skill = q.split("/")[4]
+            stregth = parseInt(str)
+            percent = parseInt(eq)
+            flat = parseInt(xtall)
+            crit = parseInt(skill);
+            //RUMUS
+*/
+
 
           case 'lv':
           case 'lvl':
