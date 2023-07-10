@@ -890,6 +890,7 @@ exports.format = (prefix, command) => {
 		case 'promote':
     case 'spam':
     case 'ytdl':
+    case 'watk':
   			return `mohon masukan query!!\nContoh: ${prefix + command} masukan query disini`
   		break;
 

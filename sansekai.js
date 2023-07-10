@@ -448,6 +448,11 @@ module.exports = sansekai = async (client, m, chatUpdate, store) => {
           }
           break;
 
+        case 'watk':
+          if(!q) return reply(lang.format(prefix, command))
+          await client.sendText(from, eval(q), mek)
+          break
+
           case 'lv':
           case 'lvl':
           case 'lvling' : 

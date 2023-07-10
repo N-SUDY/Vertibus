@@ -836,6 +836,7 @@ exports.format = (prefix, command) => {
 		case 'promote':
     case 'promote':
     case 'ytdl':
+    case 'watk':
   			return `Please input query!!\nExample: ${prefix + command} your query here`
   		break;
 
