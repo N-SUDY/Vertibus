@@ -37,7 +37,13 @@ Cmd: ${prefix}mq
 Skow list of MQ material
 
 Cmd: ${prefix}maze
-menampilkan penjelasan tentang labirin serikat
+Show guide about guild maze
+
+Cmd: ${prefix}watk
+Calculating highest watk/deff some equipment
+
+Cmd: ${prefix}cdmg
+Calculating total Critical Damage some char
 
 *(Guild DB)*
 Cmd: ${prefix}buff
@@ -837,6 +843,7 @@ exports.format = (prefix, command) => {
     case 'promote':
     case 'ytdl':
     case 'watk':
+    case 'cdmg':
   			return `Please input query!!\nExample: ${prefix + command} your query here`
   		break;
 

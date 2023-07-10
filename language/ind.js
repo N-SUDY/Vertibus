@@ -22,23 +22,29 @@ list event
 *(Dalam Pengembangan)*
 
 Cmd: ${prefix}maintenance
-menampilkan maintenance terbaru
+Menampilkan maintenance terbaru
 
 Cmd: ${prefix}boss
-menampilkan detail tentang boss
+Menampilkan detail tentang boss
 
 Cmd: ${prefix}mobs
-menampilkan detail tentang mob
+Menampilkan detail tentang mob
 
 Cmd: ${prefix}panah
 Cmd: ${prefix}arrow
-menampilkan list arrow dengan Element
+Menampilkan list arrow dengan Element
 
 Cmd: ${prefix}maze
-menampilkan penjelasan tentang labirin serikat
+Menampilkan penjelasan tentang labirin serikat
 
 Cmd: ${prefix}mq
-menampilkan list material untuk MQ
+Menampilkan list material untuk MQ
+
+Cmd: ${prefix}watk
+Menghitung watk/deff tertinggi suatu equipment
+
+Cmd: ${prefix}cdmg
+Menghitung Critical Damage suatu char
 
 *(Guild DB)*
 Cmd: ${prefix}buff
@@ -814,7 +820,7 @@ Terimakasih .`
 
 exports.donate = () => {
   return `
-💰*Bantu donasi di:*
+💰 *Bantu donasi di:*
 💲 Saweria : https://saweria.co/mikako
 💳 dana : 083831853737
 `
@@ -891,6 +897,7 @@ exports.format = (prefix, command) => {
     case 'spam':
     case 'ytdl':
     case 'watk':
+    case 'cdmg':
   			return `mohon masukan query!!\nContoh: ${prefix + command} masukan query disini`
   		break;
 

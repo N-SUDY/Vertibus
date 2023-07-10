@@ -454,22 +454,31 @@ module.exports = sansekai = async (client, m, chatUpdate, store) => {
           proc = eval(int*110/100+10)
           str = proc.toString()
           m.reply(str)
-          break
+          break;
 
-        /*case 'cdmg':
+        case 'cdmg':
           if(!q)return reply(lang.format(prefix, command))
-          if(!q.includes("/")) return reply("use \"/\" as separator!\nex: total STR/total STR on eq/total cd percent/cd flat/LV of skill critical UP\nDon't use space!\n\nExplanation:\n")
-            str = q.spli("/")[0]
+          if(!q.includes("/")) return reply("use \"/\" as separator!\nex: total STR/total STR on eq/total cd percent/cd flat/LV of skill critical UP\nOr:\n/cdmg 250/5/20/40/10\nDon't use space!\n\nPenjelasan:\n- Total Str di personal status\n- Total STR di equipment/avatar\n- Total critical damage % di eq/avatar\n- Total critical damage di eq/avatar\n Level skill Crit. UP(Di skill tempur")
+            str = q.split("/")[0]
             strP = q.split("/")[1]
             eq = q.split("/")[2]
             xtall = q.split("/")[3]
             skill = q.split("/")[4]
-            stregth = parseInt(str)
+            strength = parseInt(str)
+            strengthPers = parseInt(strP)
             percent = parseInt(eq)
             flat = parseInt(xtall)
             crit = parseInt(skill);
             //RUMUS
-*/
+            base = 150 + (strength / 5)
+            cdPers = base * percent / 100
+            pasif = crit / 2 / 100 * 200
+            strPer = strength *  strengthPers / 100 / 5
+            total = base + cdPers + pasif + strPer + flat
+            rounded = Math.floor(total)
+            result = rounded.toString()
+            reply(result)
+            break;
 
 
           case 'lv':
