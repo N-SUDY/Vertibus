@@ -450,7 +450,9 @@ module.exports = sansekai = async (client, m, chatUpdate, store) => {
 
         case 'watk':
           if(!q) return reply(lang.format(prefix, command))
-          await client.sendText(from, eval(q), mek)
+          int = parseInt(q)
+          proc = int*110/100+10
+          await client.sendText(from, eval(proc), mek)
           break
 
           case 'lv':
