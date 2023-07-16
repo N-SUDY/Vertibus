@@ -4,13 +4,15 @@ const fs = require("fs");
 const os = require('os');
 const speed = require('performance-now')
 const { performance } = require('perf_hooks');
-const { runtime, formatp } = require("./lib/utils.js") 
+const { runtime, formatp, getBuffer } = require("./lib/utils.js") 
 const util = require("util");
 const chalk = require("chalk");
 const { Configuration, OpenAIApi } = require("openai");
 const cheerio = require("cheerio");
 const axios = require("axios");
 const ytdl = require('ytdl-core');
+const fbdl = require('fbvideos');
+const { ocrSpace } = require('ocr-space-api-wrapper');
 const { doing } = require('./lib/translate')
 const { event } = require("./lib/event.js")
 const { mt } = require("./lib/mt.js")
@@ -189,6 +191,8 @@ module.exports = sansekai = async (client, m, chatUpdate, store) => {
     const isGroupAdmins = groupAdmins.includes(sender) || false
     const botAdmin = groupAdmins.includes(botNumber) || false
     const isMyGuild = myGuild.includes(groupId) || false
+    const isOwner = sender.includes(global.owner) || false
+
 
 
     /*Media Init*/
@@ -375,6 +379,11 @@ module.exports = sansekai = async (client, m, chatUpdate, store) => {
       }
     }
 
+    //maintenance Toggle
+    if (global.maintenance === true && isCmd2 && !isOwner) {
+      return reply("Bot is Under Maintenance! 🛠")
+    }
+
 
     // Push Message To Console
     let argsLog = budy.length > 30 ? `${q.substring(0, 30)}...` : budy;
@@ -393,6 +402,7 @@ module.exports = sansekai = async (client, m, chatUpdate, store) => {
         chalk.yellow(`[ ${m.sender.replace("@s.whatsapp.net", "")} ]`),
         chalk.blueBright("IN"),
         chalk.green(groupName)
+
       );
     }
 
@@ -473,7 +483,7 @@ module.exports = sansekai = async (client, m, chatUpdate, store) => {
             base = 150 + (strength / 5)
             cdPers = base * percent / 100
             pasif = crit / 2 / 100 * 200
-            strPer = strength *  strengthPers / 100 / 5
+            strPer = strength * strengthPers / 100 / 5
             total = base + cdPers + pasif + strPer + flat
             rounded = Math.floor(total)
             result = rounded.toString()
@@ -868,7 +878,20 @@ ger = isQuotedImage || isQuotedSticker ? JSON.parse(JSON.stringify(m).replace('q
 ranp = getRandom('54')
 owgi = await  client.downloadAndSaveMediaMessage(qms,ranp)
   console.log(ranp)
-anu = await imgbb("29f0fec470786b62364c5072718e41be", owgi)
+ options = {
+  apiKey: global.imgbb, // MANDATORY
+
+  imagePath: owgi, // OPTIONAL: pass a local file (max 32Mb)
+
+  name: ranp, // OPTIONAL: pass a custom filename to imgBB API
+
+  expiration: 3600 /* OPTIONAL: pass a numeric value in seconds.
+  It must be in the 60-15552000 range.
+  Enable this to force your image to be deleted after that time. */,
+};
+
+anu = await imgbb(options)
+
 teks = `${anu.display_url}`
 anu1 = `https://api.memegen.link/images/custom/${q.split('|')[1] ? top : ' '}/${q.split('|')[1] ? bottom : top}.png?background=${teks}`
 encmedia = await client.sendImageAsSticker(from, `${anu1}`, m, { packname: global.packName, author: global.author })
@@ -899,7 +922,6 @@ break
 
         case 'forward':
 client.sendMessage(from, text, {contextInfo : {forwardingScore: 99, isForwarded: true}})
-
           break
           
 
@@ -1088,7 +1110,7 @@ break
           if(!isGroup) return reply(ind.group())
           break
 
-                                                              case 'ytdl':
+  case 'ytdl':
   if (!q) return reply (lang.format(prefix, command))
   if (!q.includes('youtu')) return reply('link should be from youtube')
   file = sender.split('@')[0]+'.mp3'
@@ -1111,6 +1133,38 @@ break
         await client.sendMessage(from, { audio: { url: media }, mimetype: 'audio/mp4', ptt: true })
           fs.unlinkSync(media)
   break      
+
+case 'fbdl':
+  if (!q) return reply (lang.format(prefix, command))
+  if (!q.includes('facebook.com')) return reply('link should be from Facebook')
+      proc = fbdl.high(q)
+      //buff = await getBuffer(proc.url)
+     client.sendVideo(from, proc.url)
+    break
+
+  case 'ocr': 
+    if (isMedia && !m.message.videoMessage || isQuotedImage || isQuotedSticker) {
+      ger = isQuotedImage || isQuotedSticker ? JSON.parse(JSON.stringify(m).replace('quotedM','m')).message.extendedTextMessage.contextInfo : m
+      ranp = getRandom('99')
+    owgi = await  client.downloadAndSaveMediaMessage(qms,ranp)
+    ocr = await ocrSpace(owgi, {apiKey: global.ocr})
+    // console.log(ocr);
+    pass = ocr.ParsedResults[0].ParsedText
+    if (pass === '') return reply("can't parsing data, this is not image/bot error.")
+    client.sendText(from, pass)
+    fs.unlinkSync(owgi);
+    }
+    break
+
+  case 'changelog':
+    reply(lang.changelog())
+  break
+
+case 'report': 
+  if (!q) return reply(lang.format(prefix.command))
+  client.sendText(global.owner + '@s.whatsapp.net', `*Report error*\nFrom: wa.me/${sender.split('@')[0]}\nError: ${q}`)
+  reply(lang.success())
+break
  
 
 

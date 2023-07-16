@@ -62,6 +62,9 @@ Removes one of the buffs in the guild buff list
 Cmd: ${prefix}language
 Setting bot Language
 
+Cmd: ${prefix}changelog
+Checking new update 
+
 Cmd: ${prefix}reminder
 Turn On/Off reminder
 
@@ -75,9 +78,27 @@ Make stickers from the images sent
 Cmd: ${prefix}smeme
 Create stickers with text
 
+Cmd: ${prefix}ocr
+Extract text on the image
+
+Cmd: ${prefix}report
+reporting error to owner
+
 CMD: ${prefix}donate
 Wanna donate me?
+
 `
+}
+
+exports.changelog = () => {
+	return `
+	Changelog ${global.botName}
+===== *16 - 07 - 2023* =====
+- *Add Changelog at list*
+- *Add OCR at list*
+- *Add Report at list*
+- *Fix smeme limit usage*
+- pre-add fbdl(no resp)`
 }
 
 exports.arrow = () => {
@@ -844,6 +865,8 @@ exports.format = (prefix, command) => {
     case 'ytdl':
     case 'watk':
     case 'cdmg':
+    case 'fbdl':
+    case 'report':
   			return `Please input query!!\nExample: ${prefix + command} your query here`
   		break;
 

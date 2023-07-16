@@ -63,6 +63,9 @@ Menghapus salah satu buff di list buff serikat
 Cmd: ${prefix}bahasa
 Mengganti bahasa bot
 
+Cmd: ${prefix}changelog
+Menampilkan update terbaru bot
+
 Cmd: ${prefix}reminder
 Menghidupkan/Mematikan Pengingat
 
@@ -76,9 +79,27 @@ Membuat sticker dari gambar yg dikirim
 Cmd: ${prefix}smeme
 Membuat sticker dengan teks
 
+Cmd: ${prefix}ocr
+Mengekstrak teks yang ada dalam gambar
+
+Cmd: ${prefix}report
+Report error kepada owner
+
 Cmd: ${prefix}donasi
 Mau berdonasi?
+
 `
+}
+
+exports.changelog = () => {
+	return `
+	Changelog ${global.botName}
+===== *16 - 07 - 2023* =====
+- *Add Changelog at list*
+- *add OCR at list*
+- *add Report at list*
+- *Fix smeme limit usage*
+- pre-add fbdl(no resp)`
 }
 
 exports.arrow = () => {
@@ -898,6 +919,8 @@ exports.format = (prefix, command) => {
     case 'ytdl':
     case 'watk':
     case 'cdmg':
+    case 'fbdl':
+    case 'report':
   			return `mohon masukan query!!\nContoh: ${prefix + command} masukan query disini`
   		break;
 
