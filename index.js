@@ -1,3 +1,4 @@
+require('./setting')
 sessionName = "client";
 const {
   default: sansekaiConnect,
