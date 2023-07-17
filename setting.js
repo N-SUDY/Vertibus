@@ -17,4 +17,4 @@ global.imgbb = "33270f0a84f041ee046f429d7e6f3c6f";
 
 /*Info*/
 global.hit = 0
-global.maintenance = true
+global.maintenance = false
