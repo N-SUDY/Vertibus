@@ -1,4 +1,3 @@
-require('./setting')
 sessionName = "client";
 const {
   default: sansekaiConnect,
@@ -454,18 +453,15 @@ console.log(err)
     return await client.sendMessage(jid, { image: buffer, caption: caption, ...options }, { quoted });
   };
 
-  client.sendVideo = async (jid, path, caption = "", quoted = "", options) => {
-    let buffer = Buffer.isBuffer(path)
-      ? path
-      : /^data:.*?\/.*?;base64,/i.test(path)
-      ? Buffer.from(path.split`,`[1], "base64")
-      : /^https?:\/\//.test(path)
-      ? await await getBuffer(path)
-      : fs.existsSync(path)
-      ? fs.readFileSync(path)
-      : Buffer.alloc(0);
-    return await client.sendMessage(jid, { video: buffer, caption: caption, ...options }, { quoted });
-  };
+  client.sendVideo = async (jid, path, caption = '', quoted = '', gif = false, options) => {
+        let buffer = Buffer.isBuffer(path) ? path : /^data:.*?\/.*?;base64,/i.test(path) ? Buffer.from(path.split`,`[1], 'base64') : /^https?:\/\//.test(path) ? await (await getBuffer(path)) : fs.existsSync(path) ? fs.readFileSync(path) : Buffer.alloc(0)
+        return await client.sendMessage(jid, { video: buffer, caption: caption, gifPlayback: gif, ...options }, { quoted })
+    }
+
+  client.sendAudio = async (jid, path, quoted = '', ptt = false, options) => {
+        let buffer = Buffer.isBuffer(path) ? path : /^data:.*?\/.*?;base64,/i.test(path) ? Buffer.from(path.split`,`[1], 'base64') : /^https?:\/\//.test(path) ? await (await getBuffer(path)) : fs.existsSync(path) ? fs.readFileSync(path) : Buffer.alloc(0)
+        return await client.sendMessage(jid, { audio: buffer, ptt: ptt, ...options }, { quoted })
+    }
 
   /**
      * 

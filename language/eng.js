@@ -34,7 +34,7 @@ Cmd: ${prefix}arrow
 Show list Arrow with Elemental
 
 Cmd: ${prefix}mq
-Skow list of MQ material
+Show list of MQ material
 
 Cmd: ${prefix}maze
 Show guide about guild maze
@@ -44,6 +44,9 @@ Calculating highest watk/deff some equipment
 
 Cmd: ${prefix}cdmg
 Calculating total Critical Damage some char
+
+Cmd: ${prefix}ailment
+Show details about ailment
 
 *(Guild DB)*
 Cmd: ${prefix}buff
@@ -78,6 +81,9 @@ Make stickers from the images sent
 Cmd: ${prefix}smeme
 Create stickers with text
 
+Cmd: ${prefix}toimg 
+Convert sticker into image
+
 Cmd: ${prefix}ocr
 Extract text on the image
 
@@ -98,7 +104,13 @@ exports.changelog = () => {
 - *Add OCR at list*
 - *Add Report at list*
 - *Fix smeme limit usage*
-- pre-add fbdl(no resp)`
+- pre-add fbdl(no resp)
+
+===== *17 - 07 - 2023* =====
+- *Add Toimg at list*
+- *Add ailment at list*
+- fix typo
+`
 }
 
 exports.arrow = () => {
@@ -867,6 +879,8 @@ exports.format = (prefix, command) => {
     case 'cdmg':
     case 'fbdl':
     case 'report':
+    case 'ytmp3':
+    case 'ytmp4':
   			return `Please input query!!\nExample: ${prefix + command} your query here`
   		break;
 

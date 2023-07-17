@@ -31,7 +31,6 @@ Cmd: ${prefix}mobs
 Menampilkan detail tentang mob
 
 Cmd: ${prefix}panah
-Cmd: ${prefix}arrow
 Menampilkan list arrow dengan Element
 
 Cmd: ${prefix}maze
@@ -45,6 +44,9 @@ Menghitung watk/deff tertinggi suatu equipment
 
 Cmd: ${prefix}cdmg
 Menghitung Critical Damage suatu char
+
+Cmd: ${prefix}ailment
+Menampilkan penjelasan tentang status buruk
 
 *(Guild DB)*
 Cmd: ${prefix}buff
@@ -79,6 +81,9 @@ Membuat sticker dari gambar yg dikirim
 Cmd: ${prefix}smeme
 Membuat sticker dengan teks
 
+Cmd: ${prefix}toimg
+Convert stiker menjadi gambar
+
 Cmd: ${prefix}ocr
 Mengekstrak teks yang ada dalam gambar
 
@@ -99,7 +104,13 @@ exports.changelog = () => {
 - *add OCR at list*
 - *add Report at list*
 - *Fix smeme limit usage*
-- pre-add fbdl(no resp)`
+- pre-add fbdl(no resp)
+
+===== *17 - 07 - 2023* =====
+- *Add Toimg at list*
+- *Add ailment at list*
+- fix typo
+`
 }
 
 exports.arrow = () => {
@@ -702,7 +713,7 @@ itu saja guide Guild Maze yang bisa saya jelaskan. Semoga Beruntung.
 
 	} else if (query == "build") {
 		return `
-Umtuk memainkan Guild Maze di rekomendasikan menggunakan char level 1 dengan job Bowgun(untuk yang sudah T5 skill) atau job Bow. Status yang di isi adalah Full DEX/(DEX/AGI) untuk menambah aspd
+Untuk memainkan Guild Maze di rekomendasikan menggunakan char level 1 dengan job Bowgun(untuk yang sudah T5 skill) atau job Bow. Status yang di isi adalah Full DEX/(DEX/AGI) untuk menambah aspd
 
  build skillnya :
 Crosfire/Tembakan silang lvl 10
@@ -921,6 +932,8 @@ exports.format = (prefix, command) => {
     case 'cdmg':
     case 'fbdl':
     case 'report':
+    case 'ytmp3':
+    case 'ytmp4':
   			return `mohon masukan query!!\nContoh: ${prefix + command} masukan query disini`
   		break;
 
