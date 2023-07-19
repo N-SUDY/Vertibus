@@ -90,6 +90,15 @@ Mengekstrak teks yang ada dalam gambar
 Cmd: ${prefix}report
 Report error kepada owner
 
+Cmd: ${prefix}hidetag
+Tag semua member yang tersembunyi dengan teks
+
+Cmd: ${prefix}translate
+Menerjemahkan teks 
+
+Cmd: ${prefix}promote
+Promote member menjadi admin
+
 Cmd: ${prefix}donasi
 Mau berdonasi?
 
@@ -110,6 +119,12 @@ exports.changelog = () => {
 - *Add Toimg at list*
 - *Add ailment at list*
 - fix typo
+
+===== *19 - 07 - 2023* =====
+- *Add Hidetag at list*
+- *Add Translate at list*
+- *Add Promote at list*
+- Re-write toggle Raid on/off
 `
 }
 
@@ -934,6 +949,7 @@ exports.format = (prefix, command) => {
     case 'report':
     case 'ytmp3':
     case 'ytmp4':
+    case 'hidetag':
   			return `mohon masukan query!!\nContoh: ${prefix + command} masukan query disini`
   		break;
 

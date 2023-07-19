@@ -90,8 +90,18 @@ Extract text on the image
 Cmd: ${prefix}report
 reporting error to owner
 
+Cmd: ${prefix}hidetag
+Tagging all member but hidden with text
+
+Cmd: ${prefix}translate
+Translating a text into your language
+
+Cmd: ${prefix}promote
+Promote a member to admin
+
 CMD: ${prefix}donate
 Wanna donate me?
+
 
 `
 }
@@ -110,6 +120,12 @@ exports.changelog = () => {
 - *Add Toimg at list*
 - *Add ailment at list*
 - fix typo
+
+===== *19 - 07 - 2023* =====
+- *Add Hidetag at list*
+- *Add Translate at list*
+- *Add Promote at list*
+- Re-write toggle Raid on/off
 `
 }
 
@@ -881,6 +897,7 @@ exports.format = (prefix, command) => {
     case 'report':
     case 'ytmp3':
     case 'ytmp4':
+    case 'hidetag':
   			return `Please input query!!\nExample: ${prefix + command} your query here`
   		break;
 

@@ -22,6 +22,7 @@ let setting = require("./key.json");
 var ipackName = false//Don't fill. sett packName on setting.js
 var iauthor = false//Don't fill. sett author on setting.js
 const guild = JSON.parse(fs.readFileSync('./db/guild.json'))
+const inRaid = JSON.parse(fs.readFileSync("./lib/guild.json"))
 
 /*Change Your Language Here!*/
 lang = ind
@@ -79,7 +80,7 @@ const checkName = (name) => {
   })
   if(position !== false) {
     guild[position].id = cname
-    fs.writeFileSync('./lib/guild.json', JSON.stringify(guild))
+    fs.writeFileSync('./db/guild.json', JSON.stringify(guild))
   }
         }
 
@@ -183,6 +184,9 @@ module.exports = sansekai = async (client, m, chatUpdate, store) => {
 
     // Group
     const myGuild = global.guild
+    const isUrl = (url) => {
+    return url.match(new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)/, 'gi'))
+    }
     const groupMetadata = m.isGroup ? await client.groupMetadata(m.chat).catch((e) => {}) : "";
     const groupName = m.isGroup ? groupMetadata.subject : "";
     const groupId = m.isGroup ? groupMetadata.id : ''
@@ -191,14 +195,14 @@ module.exports = sansekai = async (client, m, chatUpdate, store) => {
     const isGroupAdmins = groupAdmins.includes(sender) || false
     const botAdmin = groupAdmins.includes(botNumber) || false
     const isMyGuild = myGuild.includes(groupId) || false
-    const isOwner = sender.includes(global.owner) || false
+    const isOwner = global.owner.includes(sender.split('@')[0]) || false
 
 
 
     /*Media Init*/
     const isMedia = (m.mtype === 'imageMessage' || m.mtype === 'videoMessage')
     const isQuotedImage = m.mtype === 'extendedTextMessage' && content.includes('imageMessage')
-        const isQuotedAudio = m.mtype === 'extendedTextMessage' && content.includes('audioMessage')
+    const isQuotedAudio = m.mtype === 'extendedTextMessage' && content.includes('audioMessage')
     const isQuotedSticker = m.mtype === 'extendedTextMessage' && content.includes('stickerMessage')
 
     /*Farming Object*/
@@ -877,7 +881,7 @@ if ((isMedia && !m.message.videoMessage || isQuotedImage || isQuotedSticker) && 
 ger = isQuotedImage || isQuotedSticker ? JSON.parse(JSON.stringify(m).replace('quotedM','m')).message.extendedTextMessage.contextInfo : m
 ranp = getRandom('54')
 owgi = await  client.downloadAndSaveMediaMessage(qms,ranp)
-  console.log(ranp)
+  console.log(ranp) 
  options = {
   apiKey: global.imgbb, // MANDATORY
 
@@ -981,27 +985,31 @@ tolang = args[0]
 
                       case 'raid':
                         if (!isGroupAdmins) return reply(lang.onAdmin())
+                        onRaid = await inRaid.raid
                         toggle = q
                         if (!q) return reply(lang.format(prefix, command))
-                        if (toggle == "on" && global.raid === false) {
-                          global.raid = true
-                      
+                        if (toggle == "on" && onRaid === false) {
+                          /*opt = {
+                            raid: true
+                          }*/
+                          inRaid.raid = true
+                          fs.writeFileSync('./lib/guild.json', JSON.stringify(inRaid));
                           client.sendText(from, lang.success(), mek)
-                        } else if (toggle == "on" && global.raid === true) {
+                        } else if (toggle == "on" && onRaid === true) {
                           return reply(lang.format(prefix, command))
                         }
-                        if (toggle == "off" && global.raid === true) {
-                          global.raid = false
-                      
+                        if (toggle == "off" && onRaid === true) {
+                          inRaid.raid = false
+                          fs.writeFileSync('./lib/guild.json', JSON.stringify(inRaid));
                           client.sendText(from, lang.success(), mek)
-                        } else if (toggle == "off" && global.raid === false) {
+                        } else if (toggle == "off" && onRaid === false) {
                           return reply(lang.format(prefix, command))
                         }
                         break
 
                       case 'status':
                         sr = global.reminder == true ? "ON" : "OFF"
-                        srd = global.raid == true ? "ON" : "OFF"
+                        srd = inRaid.raid == true ? "ON" : "OFF"
                         sl = lang == ind ? "Indonesia" : "English"
                         teks = `*${global.botName} Status*\nReminder: ${sr}\nRaid: ${srd}\nLanguage: ${sl}`
                         client.sendText(from, teks, mek)
@@ -1105,9 +1113,21 @@ break
           client.sendText(from, db)
             break
 
-        case 'hidetag':
-          if(!isOwner) return reply(lang.owner())
-          if(!isGroup) return reply(ind.group())
+    case 'hidetag':
+    if(!isGroupAdmins) return reply(lang.onAdmin())
+    if(!m.isGroup) return reply(ind.group())
+    if(!q) return reply(ind.format(prefix, command))
+    group = await client.groupMetadata(from)
+    members = group.participants
+    mem = []
+    await members.map( async adm => {
+          mem.push(adm.id.replace('c.us', 's.whatsapp.net'))
+          })
+    /*options = {
+          text: text,
+          contextInfo: { mentionedJid: mem }
+          }*/
+      client.sendMessage(from, {text: q, mentions: mem})
           break
 
   case 'ytdl':
@@ -1118,6 +1138,23 @@ break
   sen =await client.sendMessage(from, { audio: {url: `./${file}`}, mimetype: 'audio/mp4'})
 fs.unlinkSync(sen)
 break
+
+case 'ytmp3':
+      let { yta } = require('./lib/y2mate')
+      if (!text) return m.reply(`Example : ${prefix + command} https://youtube.com/watch?v=PtFMh6Tccag%27 128kbps`)
+      quality = args[1] ? args[1] : '128kbps'
+      media = await yta(text, quality)
+      if (media.filesize >= 100000) return m.reply('File Melebihi Batas '+util.format(media))
+       client.sendMessage(from, { audio: { url: media.dl_link }, mimetype: 'audio/mpeg', fileName: `${media.title}.mp3` }, { quoted: m })   
+break
+case 'ytmp4':
+      let { ytv } = require('./lib/y2mate')
+      if (!text) return m.reply(`Example : ${prefix + command} https://youtube.com/watch?v=PtFMh6Tccag%27 360p`)
+      quality = args[1] ? args[1] : '360p'
+      media = await ytv(text, quality)
+      if (media.filesize >= 100000) return m.reply('File Melebihi Batas '+util.format(media))
+      client.sendMessage(from, { video: { url: media.dl_link }, mimetype: 'video/mp4', fileName: `${media.title}.mp4`, caption: `⭔ Title : ${media.title}\n⭔ File Size : ${media.filesizeF}\n⭔ Url : ${isUrl(text)}\n⭔ Ext : MP3\n⭔ Resolusi : ${args[1] || '360p'}` }, { quoted: m })
+              break
 
         case 'addmem':
           if(!q) return reply(lang.format(prefix, command))
@@ -1132,7 +1169,7 @@ break
         media = await client.downloadAndSaveMediaMessage(qms, ranp)
         await client.sendMessage(from, { audio: { url: media }, mimetype: 'audio/mp4', ptt: true })
           fs.unlinkSync(media)
-  break      
+  break     
 
 case 'fbdl':
   if (!q) return reply (lang.format(prefix, command))

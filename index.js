@@ -29,6 +29,7 @@ const fileType = require("file-type");
 const PhoneNumber = require("awesome-phonenumber");
 const { imageToWebp, videoToWebp, writeExifImg, writeExifVid, toImage, stickerToGif } = require('./lib/exif');
 const { ind } =require("./language")
+const inRaid = JSON.parse(fs.readFileSync('./lib/guild.json'));
 
 const store = makeInMemoryStore({ logger: pino().child({ level: "silent", stream: "store" }) });
 
@@ -385,9 +386,10 @@ console.log(err)
       client.sendMessage(target, {text: text, mentions: mem})
   }
 
-  setInterval( function() {
+  setInterval( async function() {
     now = moment().tz("Asia/Jakarta").format("HH:mm")
     day = moment().tz('Asia/Jakarta').format('dddd')
+    onRaid = await inRaid.raid
     
     if (global.reminder == true && now == "06:15") {
       client.sendMessage(global.owner + "@s.whatsapp.net", { text: `Time to Cooking buff on Toram Online\n\n${now}` });
@@ -399,14 +401,15 @@ console.log(err)
     }
 
     /*RAID GUILD*/
-    if (global.raid == true && day == "Saturday" && now == "15:00") {
+    if (onRaid == true && day == "Saturday" && now == "15:00") {
       hidetag('120363023056066862@g.us', ind.raid());
     }
-    if (global.raid == true && day == "Saturday" && now == "18:00") {
-      hidetag('120363023056066862@g.us', ind.raid());
+    if (onRaid == true && day == "Saturday" && now == "18:30") {
+      hidetag('6289675651966-1611471388@g.us', ind.raid());
     }
-    if (global.raid == false && day == "Saturday" && now == "23.00") {
-      global.raid = true
+    if (onRaid == false && day == "Saturday" && now == "23.00") {
+      inRaid = true
+      fs.writeFileSync('./lib/guild.json', JSON.stringify(inRaid));
       client.sendMessage("6289675651966-1611471388@g.us", { text: "Raid telah di set ON otomatis" })
     }
     
