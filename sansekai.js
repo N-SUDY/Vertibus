@@ -576,6 +576,22 @@ case 'monster':
   }
   break
 
+case 'food': 
+  client.sendMessage(from, `
+*List EXP Food Buff*
+lv = Exp Needed
+1 = 1
+2 = 3
+3 = 9
+4 = 21
+5 = 45
+6 = 93
+7 = 189
+8 = 381
+9 = 765
+10 = 1533`, mek)
+break
+
 case 'arrow':
 case 'panah':
   arrow = await lang.arrow()

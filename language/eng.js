@@ -48,6 +48,9 @@ Calculating total Critical Damage some char
 Cmd: ${prefix}ailment
 Show details about ailment
 
+Cmd: ${prefix}food
+Show details about EXP needed to level up food buff
+
 *(Guild DB)*
 Cmd: ${prefix}buff
 Showing all buf guild
@@ -126,6 +129,11 @@ exports.changelog = () => {
 - *Add Translate at list*
 - *Add Promote at list*
 - Re-write toggle Raid on/off
+
+===== *22 - 07 - 2023* =====
+- *Add Food at list*
+- typo on MQ mats at eps 89
+  (indo-languange)
 `
 }
 

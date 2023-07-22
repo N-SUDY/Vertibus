@@ -48,6 +48,9 @@ Menghitung Critical Damage suatu char
 Cmd: ${prefix}ailment
 Menampilkan penjelasan tentang status buruk
 
+Cmd: ${prefix}food
+Menampilkan EXP yang dibutuhkan untuk menaikan level masakan buff
+
 *(Guild DB)*
 Cmd: ${prefix}buff
 Menampilkan seluruh Buff serikat
@@ -125,6 +128,11 @@ exports.changelog = () => {
 - *Add Translate at list*
 - *Add Promote at list*
 - Re-write toggle Raid on/off
+
+===== *22 - 07 - 2023* =====
+- *Add Food at list*
+- typo on MQ mats at eps 89
+	(indo-language)
 `
 }
 
@@ -808,7 +816,7 @@ _Map :_ Distrik labilans : A1
 
 *BAB 11*
 *eps 89 : Hutan Berjalan*
-_Item :_ Tanduk Rusak (20pcs)
+_Item :_ Tanduk Patah (20pcs)
 _Mobs :_ Rhinoceros
 _Map :_ Rawa Danau Pelarian : A3
 
