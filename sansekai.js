@@ -21,8 +21,11 @@ const { eng } = require("./language")
 let setting = require("./key.json");
 var ipackName = false//Don't fill. sett packName on setting.js
 var iauthor = false//Don't fill. sett author on setting.js
-const guild = JSON.parse(fs.readFileSync('./db/guild.json'))
-const inRaid = JSON.parse(fs.readFileSync("./lib/guild.json"))
+
+/*DataBase*/
+const guild = JSON.parse(fs.readFileSync('./db/guild.json'));
+const inRaid = JSON.parse(fs.readFileSync("./lib/guild.json"));
+const welkom = JSON.parse(fs.readFileSync('./db/welcome.json'));
 
 /*Change Your Language Here!*/
 lang = ind
@@ -192,6 +195,7 @@ module.exports = sansekai = async (client, m, chatUpdate, store) => {
     const groupId = m.isGroup ? groupMetadata.id : ''
     const groupMembers = m.isGroup ? groupMetadata.participants : ''
     const groupAdmins = m.isGroup ? getGroupAdmins(groupMembers) : ''
+    const isWelkom = m.isGroup ? welkom.includes(from) : false
     const isGroupAdmins = groupAdmins.includes(sender) || false
     const botAdmin = groupAdmins.includes(botNumber) || false
     const isMyGuild = myGuild.includes(groupId) || false
@@ -1023,11 +1027,35 @@ tolang = args[0]
                         }
                         break
 
+          case 'welcome':
+          if (!m.isGroup) return reply(lang.onGroup())
+          if (!isGroupAdmins) return reply(lang.onAdmin())
+          if (!q) return reply(lang.format(prefix, command))
+          if (text.toLowerCase() === "on") {
+            if (isWelkom) return reply('*SUDAH AKTIF* !!!')
+            welkom.push(from)
+            fs.writeFileSync('./db/welcome.json', JSON.stringify(welkom))
+            reply(lang.success())
+          } else if (text.toLowerCase() === 'off') {
+            if (!isWelkom) return reply("*TIDAK AKTIF*")
+            for (let i = 0; i < welkom.length; i++) {
+            if (welkom[i] === from) {
+            welkom.splice(i, 1)
+            fs.writeFileSync('./db/welcome.json', JSON.stringify(welkom))
+            reply(lang.success())
+            }
+            }
+          } else {
+            reply(lang.format(prefix, command))
+          }
+          break 
+
                       case 'status':
                         sr = global.reminder == true ? "ON" : "OFF"
                         srd = inRaid.raid == true ? "ON" : "OFF"
                         sl = lang == ind ? "Indonesia" : "English"
-                        teks = `*${global.botName} Status*\nReminder: ${sr}\nRaid: ${srd}\nLanguage: ${sl}`
+                        wel = isWelkom ? "ON" : "OFF"
+                        teks = `*${global.botName} Status*\nReminder: ${sr}\nRaid: ${srd}\nLanguage: ${sl}\nWelcome: ${wel}`
                         client.sendText(from, teks, mek)
                       break
 

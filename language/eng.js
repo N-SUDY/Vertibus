@@ -74,6 +74,9 @@ Checking new update
 Cmd: ${prefix}reminder
 Turn On/Off reminder
 
+Cmd: ${prefix}welcome
+Turn on/off welcome
+
 Cmd: ${prefix}status
 Show all of toggle data
 
@@ -134,6 +137,10 @@ exports.changelog = () => {
 - *Add Food at list*
 - typo on MQ mats at eps 89
   (indo-languange)
+
+===== *24 - 07 - 2023* =====
+- *Add Welcome at list*
+- restore banned bots
 `
 }
 
@@ -920,6 +927,7 @@ exports.format = (prefix, command) => {
 
   		case 'reminder':
   		case 'raid':
+  		case 'welcome':
   			return `No Change\nquery = on/off`
   		break
   			}

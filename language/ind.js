@@ -74,6 +74,9 @@ Menampilkan update terbaru bot
 Cmd: ${prefix}reminder
 Menghidupkan/Mematikan Pengingat
 
+Cmd: ${prefix}welcome
+Menghidupkan/Mematikan welcome
+
 Cmd: ${prefix}status
 Menampilkan seluruh On/Off data
 
@@ -133,6 +136,10 @@ exports.changelog = () => {
 - *Add Food at list*
 - typo on MQ mats at eps 89
 	(indo-language)
+
+===== *24 - 07 - 2023* =====
+- *Add Welcome at list*
+- Mengembalikan bot yang terbanned
 `
 }
 
@@ -972,6 +979,7 @@ exports.format = (prefix, command) => {
 
   		case 'reminder':
   		case 'raid':
+  		case 'welcome':
   			return `Tidak ada yang perlu di ganti\nquery = on/off`
   		break
   			}
