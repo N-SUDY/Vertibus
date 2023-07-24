@@ -30,6 +30,8 @@ const PhoneNumber = require("awesome-phonenumber");
 const { imageToWebp, videoToWebp, writeExifImg, writeExifVid, toImage, stickerToGif } = require('./lib/exif');
 const { ind } =require("./language")
 const inRaid = JSON.parse(fs.readFileSync('./lib/guild.json'));
+const welkom = JSON.parse(fs.readFileSync('./db/welcome.json'));
+
 
 const store = makeInMemoryStore({ logger: pino().child({ level: "silent", stream: "store" }) });
 
@@ -302,6 +304,7 @@ async function startHisoka() {
  
   //Group Update
 client.ev.on('group-participants.update', async (anu) => {
+if (!welkom.includes(anu.jid)) return
 console.log(anu)
 try {
 let metadata = await client.groupMetadata(anu.id)
