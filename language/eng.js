@@ -141,6 +141,10 @@ exports.changelog = () => {
 ===== *24 - 07 - 2023* =====
 - *Add Welcome at list*
 - restore banned bots
+
+===== *12 - 08 - 2023* =====
+- _*Change bot Number*_
+- *Add Summer quest*
 `
 }
 

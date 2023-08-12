@@ -140,6 +140,10 @@ exports.changelog = () => {
 ===== *24 - 07 - 2023* =====
 - *Add Welcome at list*
 - Mengembalikan bot yang terbanned
+
+===== *12 - 08 - 2023* =====
+- _*Mengganti nomor bot*_
+- *Add Summer quest*
 `
 }
 
