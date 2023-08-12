@@ -304,7 +304,8 @@ async function startHisoka() {
  
   //Group Update
 client.ev.on('group-participants.update', async (anu) => {
-if (!welkom.includes(anu.jid)) return
+const welc = await welkom
+if (!welc.includes(anu.id)) return
 console.log(anu)
 try {
 let metadata = await client.groupMetadata(anu.id)

@@ -1030,7 +1030,7 @@ tolang = args[0]
           case 'welcome':
           if (!m.isGroup) return reply(lang.onGroup())
           if (!isGroupAdmins) return reply(lang.onAdmin())
-          if (!q) return reply(lang.format(prefix, command))
+          if (!text) return reply(lang.format(prefix, command))
           if (text.toLowerCase() === "on") {
             if (isWelkom) return reply('*SUDAH AKTIF* !!!')
             welkom.push(from)
