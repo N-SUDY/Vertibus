@@ -974,7 +974,7 @@ exports.format = (prefix, command) => {
   		break;
 
   		case 'event':
-  			return `Anda mau mencari event apa??\n- valentine\n- natal\n- hanami`
+  			return `Anda mau mencari event apa??\n- valentine\n- natal\n- hanami\n- summer`
   		break;
 
   		case 'reminder':
@@ -1036,9 +1036,16 @@ exports.quest = (command, text = '') => {
 		return `Berikut ini list quest ${command} yang saya ketahui:\n\n`
 	break;
 
+	case 'summer':
+	case 'sumer':
+		return `Berikut ini list quest ${command} yang saya ketahui:\n\n`
+	break;
+
 	case 'event':
 		return `Berikut ini list quest ${text} yang saya ketahui:\n\n`
 	break;
+
+
 default: 
 
 	}

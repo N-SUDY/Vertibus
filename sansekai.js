@@ -723,6 +723,14 @@ case 'kain':
         }
         client.sendText(from, db, mek)
       }
+      if (text == "summer" || text == "sumer") {
+        sumer = await event(text)
+        db = await lang.quest(command, text)
+        for (let i = 0; i < sumer.quest.length; i++) {
+          db += `\n------------------------------\n*${sumer.quest[i].name}*\n*Syarat:* ${sumer.quest[i].req}\n*Quest:* \n${sumer.quest[i].quest}\n*Boss:* ${sumer.quest[i].boss}\n*Unsur Boss:* ${sumer.quest[i].element}\n*EXP:* \n${sumer.quest[i].exp}\n*Reward:* ${sumer.quest[i].reward}`
+        }
+        client.sendText(from, db, mek)
+      }
       break;
 
     case 'valentine':
@@ -742,6 +750,17 @@ case 'kain':
         }
         client.sendText(from, db, mek)
         break
+
+      case 'summer':
+      case 'sumer':
+      sumer = await event(command)
+        db = await lang.quest(command)
+        for (let i = 0; i < sumer.quest.length; i++) {
+          db += `\n------------------\n*${sumer.quest[i].name}*\nSyarat: ${sumer.quest[i].req}\nQuest: \n${sumer.quest[i].quest}\nBoss: ${sumer.quest[i].boss}\nUnsur Boss: ${sumer.quest[i].element}\nEXP: \n${sumer.quest[i].exp}\nReward: ${sumer.quest[i].reward}`
+        }
+        client.sendText(from, db, mek)
+        break
+
 
     case 'natal':
     case 'christmas':

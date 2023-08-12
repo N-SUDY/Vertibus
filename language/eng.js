@@ -922,7 +922,7 @@ exports.format = (prefix, command) => {
   		break;
 
   		case 'event':
-  			return `which event would you like to see??\n- valentine\n- christmas\n hanami`
+  			return `which event would you like to see??\n- valentine\n- christmas\n hanami\n- summer`
   		break;
 
   		case 'reminder':
@@ -984,6 +984,11 @@ exports.head = (command, text = '') => {
 exports.quest = (command, text = '') => {
 	switch(command) {
 	case 'valentine':
+		return `The following is a list of ${command} quests that I known:\n\n`
+	break;
+
+	case 'summer':
+	case 'sumer':
 		return `The following is a list of ${command} quests that I known:\n\n`
 	break;
 
