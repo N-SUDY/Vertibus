@@ -880,6 +880,11 @@ case "buff":
   client.sendText(from, db, mek)
   break
 
+case 'address':
+  if(!isMyGuild) return reply(lang.onGuild())
+    reply(lang.buff(q))
+  break
+
 
   case 'meta':
     se = client.groupMetadata()
