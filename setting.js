@@ -1,4 +1,4 @@
-/* --Your Setting-- */
+ckient/* --Your Setting-- */
 global.owner = ["6283831853737"];
 global.botName = "Vertibus";
 global.ownerName = "MiKako";

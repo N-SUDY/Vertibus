@@ -303,7 +303,7 @@ async function startHisoka() {
   
  
   //Group Update
-client.ev.on('group-participants.update', async (anu) => {
+/*client.ev.on('group-participants.update', async (anu) => {
 const welc = await welkom
 if (!welc.includes(anu.id)) return
 console.log(anu)
@@ -353,7 +353,7 @@ client.sendMessage(anu.id, {text: teksbye, mentions: anu.participants})
 } catch (err) {
 console.log(err)
 }
-})
+})*/
 
 
   const getBuffer = async (url, options) => {
@@ -390,7 +390,7 @@ console.log(err)
       client.sendMessage(target, {text: text, mentions: mem})
   }
 
-  setInterval( async function() {
+  /*setInterval( async function() {
     now = moment().tz("Asia/Jakarta").format("HH:mm")
     day = moment().tz('Asia/Jakarta').format('dddd')
     onRaid = await inRaid.raid
@@ -404,7 +404,7 @@ console.log(err)
       hidetag('120363023056066862@g.us', `*Jangan Lupa untuk memasak buff*\nReminder ini muncul setiap 12 jam\n\n- ${global.botName} -\n${now}`)
     }
 
-    /*RAID GUILD*/
+    //RAID GUILD
     if (onRaid == true && day == "Saturday" && now == "15:00") {
       hidetag('120363023056066862@g.us', ind.raid());
     }
@@ -417,7 +417,7 @@ console.log(err)
       client.sendMessage("6289675651966-1611471388@g.us", { text: "Raid telah di set ON otomatis" })
     }
     
-  }, 30000)
+  }, 30000)*/
 
   client.toImage = async (jid, path, quoted = "") => {
     let buff = Buffer.isBuffer(path)
